@@ -52,17 +52,20 @@ if [ -z "$MYSQL_HOST" ]; then
     exit 1
 fi
 
-if [ -z "$MYSQL_ROOT_PASSWORD" ]; then
-    echo "MYSQL_ROOT_PASSWORD not provided."
-    exit 1
-fi
-
 if [ -z "$ACTION_DB" ] && [ -z "$ACTION_USER" ]; then
     echo "No Actions provided."
     exit 1
 fi
 
-## run functions based on actions
+# Get root password from secret file
+MYSQL_ROOT_PASSWORD=`cat /run/secrets/mysql_root_password`
+echo MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+if [ -z "$MYSQL_ROOT_PASSWORD" ]; then
+    echo "MYSQL_ROOT_PASSWORD not provided."
+    exit 1
+fi
+
+# run functions based on actions
 if [ -n "$ACTION_DB" ]; then
     if [ "$ACTION_DB" = "create" ]; then
         create_db
