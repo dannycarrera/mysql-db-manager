@@ -59,7 +59,7 @@ fi
 
 # Get root password from secret file
 MYSQL_ROOT_PASSWORD=`cat /run/secrets/mysql_root_password`
-echo MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+
 if [ -z "$MYSQL_ROOT_PASSWORD" ]; then
     echo "MYSQL_ROOT_PASSWORD not provided."
     exit 1
